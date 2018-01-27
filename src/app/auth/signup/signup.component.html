@@ -1,0 +1,27 @@
+<div class="signup-block">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Sign Up (Under Development) </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="example-container">
+          <mat-form-field>
+            <input matInput placeholder="Email"  disabled="true" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Password" [type]="hide1 ? 'password' : 'text'" disabled="true" required>
+            <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Confirm Password" [type]="hide2 ? 'password' : 'text'" disabled="true" required>
+            <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="submit-block" >
+          <button mat-raised-button color="primary" disabled="true" >Submit</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+    </div>
