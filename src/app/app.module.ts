@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpModule } from '@angular/http';
+import { RouterModule }   from '@angular/router';
 
 /* Angular material */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,6 +28,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainComponent } from './main/main.component';
 import { FormControl, Validators } from '@angular/forms';
+import { AppRoutingModule }     from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { FormControl, Validators } from '@angular/forms';
     MatListModule,
     MatProgressBarModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

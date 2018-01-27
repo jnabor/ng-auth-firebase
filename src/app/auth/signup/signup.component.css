@@ -33,3 +33,8 @@
   margin-left: 20px;
   margin-bottom: 20px;
 }
+
+.sign-link {
+  text-align: right;
+  float: right;
+}
