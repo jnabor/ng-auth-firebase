@@ -6,7 +6,8 @@
 }
 
 .example-card {
-  width: 400px;
+  margin: auto;
+  max-width: 300px;
 }
 
 .example-form {
