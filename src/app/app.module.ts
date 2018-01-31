@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
@@ -22,6 +21,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
@@ -29,7 +29,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainComponent } from './main/main.component';
 import { FormControl, FormsModule, Validators } from '@angular/forms';
 import { AppRoutingModule }     from './app-routing.module';
-
+import { HomeComponent } from './home/home.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AppRoutingModule }     from './app-routing.module';
     SigninComponent,
     SignupComponent,
     ToolbarComponent,
-    MainComponent
+    MainComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -57,10 +59,11 @@ import { AppRoutingModule }     from './app-routing.module';
     MatProgressBarModule,
     MatInputModule,
     MatFormFieldModule,
+    MatIconModule,
     MatTooltipModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
