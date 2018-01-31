@@ -7,44 +7,48 @@
       <!-- email -->
       <mat-form-field class="example-full-width">
         <input
-          matInput placeholder="Email"
+          matInput 
+          placeholder="Email"
           [formControl]="emailFormControl"
           [errorStateMatcher]="matcherEmail"
           [(ngModel)]="userEmail"
           required>
-          <mat-error *ngIf="emailFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
-            Not a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <mat-error *ngIf="emailFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
+          Not a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-        <!-- password -->
-        <mat-form-field class="example-full-width">
-          <input
-            matInput placeholder="Password"
+      <!-- password -->
+      <mat-form-field class="example-full-width">
+        <input
+            matInput 
+            placeholder="Password"
             [formControl]="passwordFormControl"
             [errorStateMatcher]="matcherPassword"
             [type]="hide ? 'password' : 'text'"
             [(ngModel)]="userPassword"
             required>
-          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Password is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-        <div class="submit-block" >
-            <button 
-                mat-raised-button 
-                color="primary" 
-                [disabled]="submitDisabled"
-                (click)="onSignIn()" >
-              Submit</button>
-        </div>
-
-    </mat-card-content>
+      <div class="submit-block" >
+        <button 
+            mat-raised-button 
+            [disabled]="submitDisabled"
+            color="primary" 
+            (click)="onSignIn()" >
+            Submit</button>
+      </div>
+      <div class="{{progress}}" >
+        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </mat-card-content> 
   </mat-card>
 </div>
 

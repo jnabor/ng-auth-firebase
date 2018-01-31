@@ -18,6 +18,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 export class SigninComponent implements OnInit, DoCheck {
   submitDisabled = true;
+  formDisabled = true;
+  submitted = false;
+  progress: string = "progress-hidden";
   hide = true;
 
   emailPattern   = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -36,15 +39,22 @@ export class SigninComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(){
-    if(this.emailFormControl.hasError('pattern') || this.emailFormControl.hasError('required') || this.passwordFormControl.hasError('required')){      
-      this.submitDisabled = true;
-    } else {
-      this.submitDisabled = false;
+    if(this.submitted == false) {
+      if(this.emailFormControl.hasError('pattern') || this.emailFormControl.hasError('required') || this.passwordFormControl.hasError('required')){      
+        this.submitDisabled = true;
+      } else {
+        this.submitDisabled = false;
+      }
     }
   }
 
   onSignIn() {
+    this.submitted = true;
+    this.submitDisabled = true;
+    this.formDisabled = true;
+    this.progress = "progress-block";
     console.log(this.userEmail);
     console.log(this.userPassword);
   }
+
 }

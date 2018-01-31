@@ -18,7 +18,7 @@
 
 .submit-block {
   display: block;
-  margin: 20px 12px 12px 12px;
+  margin: 20px 12px 10px 12px;
 }
 
 .card-header-block {
@@ -26,6 +26,14 @@
   margin: 5px 12px 5px 12px;
 }
 
-.custom-button {
-  max-width: 200px;
+.progress-block {
+  display: block;
+  margin: 10px 12px 10px 12px;
 }
+
+.progress-hidden {
+  display: block;
+  visibility: hidden;
+  margin: 10px 12px 10px 12px;
+}
+
