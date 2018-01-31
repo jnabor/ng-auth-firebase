@@ -7,35 +7,25 @@
 
 .example-card {
   margin: auto;
-  max-width: 300px;
-}
-
-.example-form {
-  min-width: 120px;
-  max-width: 200px;
-  width: 100%;
+  max-width: 350px;
+  min-width: 150px;
 }
 
 .example-full-width {
-  width: 100%;
-}
-
-.example-container {
-  display: flex;
-  flex-direction: column;
-  padding-left: 10px;
-}
-
-.example-container > * {
-  width: 100%;
+  display: block;
+  margin: 10px 12px 10px 12px;
 }
 
 .submit-block {
-  margin-left: 20px;
-  margin-bottom: 20px;
+  display: block;
+  margin: 20px 12px 12px 12px;
 }
 
-.sign-link {
-  text-align: right;
-  float: right;
+.card-header-block {
+  display: block;
+  margin: 5px 12px 5px 12px;
+}
+
+.custom-button {
+  max-width: 200px;
 }
