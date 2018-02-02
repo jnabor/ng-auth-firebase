@@ -4,19 +4,21 @@
       <div class="card-header-block" >
         <h4>Sign Up</h4>
       </div>
+      <div [formGroup]="myGroup" >
+
       <!-- email -->
       <mat-form-field class="example-full-width">
         <input
           matInput
           placeholder="Email"
-          [formControl]="emailFormControl"
+          formControlName="email"
           [errorStateMatcher]="matcherEmail"
           [(ngModel)]="userEmail"
           required>
-        <mat-error *ngIf="emailFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
+        <mat-error *ngIf="emailPatternValid()  && !emailRequired()">
           Not a valid email address
         </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
+        <mat-error *ngIf="emailRequired()">
           Email is <strong>required</strong>
         </mat-error>
       </mat-form-field>
@@ -25,14 +27,14 @@
       <mat-form-field class="example-full-width">
         <input
             matInput
+            formControlName="password"
             placeholder="Password"
-            [formControl]="passwordFormControl"
             [errorStateMatcher]="matcherPassword"
             [type]="hide ? 'password' : 'text'"
             [(ngModel)]="userPassword"
             required>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-        <mat-error *ngIf="passwordFormControl.hasError('required')">
+        <mat-error *ngIf="passwordRequired()">
           Password is <strong>required</strong>
         </mat-error>
       </mat-form-field>
@@ -41,18 +43,18 @@
       <mat-form-field class="example-full-width">
         <input
             matInput
+            formControlName="confirmPassword"
             placeholder="Confirm Password"
-            [formControl]="confirmFormControl"
             [errorStateMatcher]="matcherPasswordConfirm"
             [type]="hide ? 'password' : 'text'"
             [(ngModel)]="confirmPassword"
             required>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-        <mat-error *ngIf="confirmFormControl.hasError('required')">
+        <mat-error *ngIf="confirmPasswordRequired()">
           Please confirm password
         </mat-error>
-        <mat-error *ngIf="confirmFormControl.hasError('matchOtherValidator')">
-          Please confirm password
+        <mat-error *ngIf="!confirmPasswordMatch() && !confirmPasswordRequired()">
+          Password mismatch
         </mat-error>
       </mat-form-field>
 
@@ -63,6 +65,7 @@
             color="primary"
             (click)="onSignUp()" >
             Submit</button>
+      </div>
       </div>
 
     </mat-card-content>
