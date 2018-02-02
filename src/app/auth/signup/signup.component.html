@@ -1,30 +1,78 @@
 <div class="signup-block">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div class="card-header-block" >
-          <mat-card-title>Sign Up (Under Development) </mat-card-title>
-        </div>        
-      </mat-card-header>
-      <mat-card-content>
-        <div class="example-container">
-          <mat-form-field>
-            <input matInput placeholder="Email"  disabled="true" required>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Password" [type]="hide1 ? 'password' : 'text'" disabled="true" required>
-            <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Confirm Password" [type]="hide2 ? 'password' : 'text'" disabled="true" required>
-            <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <div class="submit-block" >
-          <button mat-raised-button color="primary" disabled="true" >Submit</button>
-          <div class="sign-link"><a mat-button color="primary" routerLink="/signin">Sign In</a></div>
-        </div>
-      </mat-card-actions>
-    </mat-card>
-    </div>
+  <mat-card class="example-card" [class.mat-elevation-z2]="true" *ngIf="!toggleProgress">
+    <mat-card-content>
+      <div class="card-header-block" >
+        <h4>Sign Up</h4>
+      </div>
+      <!-- email -->
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          placeholder="Email"
+          [formControl]="emailFormControl"
+          [errorStateMatcher]="matcherEmail"
+          [(ngModel)]="userEmail"
+          required>
+        <mat-error *ngIf="emailFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
+          Not a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- password -->
+      <mat-form-field class="example-full-width">
+        <input
+            matInput
+            placeholder="Password"
+            [formControl]="passwordFormControl"
+            [errorStateMatcher]="matcherPassword"
+            [type]="hide ? 'password' : 'text'"
+            [(ngModel)]="userPassword"
+            required>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- confirm password -->
+      <mat-form-field class="example-full-width">
+        <input
+            matInput
+            placeholder="Confirm Password"
+            [formControl]="confirmFormControl"
+            [errorStateMatcher]="matcherPasswordConfirm"
+            [type]="hide ? 'password' : 'text'"
+            [(ngModel)]="confirmPassword"
+            required>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-error *ngIf="confirmFormControl.hasError('required')">
+          Please confirm password
+        </mat-error>
+        <mat-error *ngIf="confirmFormControl.hasError('matchOtherValidator')">
+          Please confirm password
+        </mat-error>
+      </mat-form-field>
+
+      <div class="submit-block" >
+        <button
+            mat-raised-button
+            [disabled]="submitDisabled"
+            color="primary"
+            (click)="onSignUp()" >
+            Submit</button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+  <div class="progress-block" *ngIf="toggleProgress">
+    <mat-progress-spinner
+        color="primary"
+        mode="indeterminate" >
+    </mat-progress-spinner>
+  </div>
+</div>
+
+

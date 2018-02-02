@@ -22,13 +22,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MainComponent } from './main/main.component';
 import { FormControl, FormsModule, Validators } from '@angular/forms';
-import { AppRoutingModule }     from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth/auth.service';
 
@@ -61,6 +62,7 @@ import { AuthService } from './auth/auth.service';
     MatFormFieldModule,
     MatIconModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
     AppRoutingModule
   ],
   providers: [AuthService],

@@ -1,5 +1,5 @@
 <div class="signin-block">
-  <mat-card class="example-card" [class.mat-elevation-z2]="true">
+  <mat-card class="example-card" [class.mat-elevation-z2]="true" *ngIf="!toggleProgress">
     <mat-card-content>
       <div class="card-header-block" >
         <h4>Sign In</h4>
@@ -7,7 +7,7 @@
       <!-- email -->
       <mat-form-field class="example-full-width">
         <input
-          matInput 
+          matInput
           placeholder="Email"
           [formControl]="emailFormControl"
           [errorStateMatcher]="matcherEmail"
@@ -24,7 +24,7 @@
       <!-- password -->
       <mat-form-field class="example-full-width">
         <input
-            matInput 
+            matInput
             placeholder="Password"
             [formControl]="passwordFormControl"
             [errorStateMatcher]="matcherPassword"
@@ -38,18 +38,22 @@
       </mat-form-field>
 
       <div class="submit-block" >
-        <button 
-            mat-raised-button 
+        <button
+            mat-raised-button
             [disabled]="submitDisabled"
-            color="primary" 
+            color="primary"
             (click)="onSignIn()" >
             Submit</button>
       </div>
-      <div class="{{progress}}" >
-        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
-      </div>
-    </mat-card-content> 
+
+    </mat-card-content>
   </mat-card>
+  <div class="progress-block" *ngIf="toggleProgress">
+    <mat-progress-spinner
+        color="primary"
+        mode="indeterminate" >
+    </mat-progress-spinner>
+  </div>
 </div>
 
 

@@ -28,12 +28,9 @@
 
 .progress-block {
   display: block;
-  margin: 10px 12px 10px 12px;
+  margin: auto;
+  width: 100px;
+  padding-top: 20px;
 }
 
-.progress-hidden {
-  display: block;
-  visibility: hidden;
-  margin: 10px 12px 10px 12px;
-}
 
