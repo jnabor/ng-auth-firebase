@@ -37,6 +37,12 @@
         <mat-error *ngIf="passwordRequired()">
           Password is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="!passwordLengthValid() && !passwordRequired()">
+          Password must be 8-20 characters
+        </mat-error>
+        <mat-error *ngIf="!passwordValid() && !passwordRequired() &&passwordLengthValid()">
+          number, lowercase, upper case, special characters required
+        </mat-error>
       </mat-form-field>
 
       <!-- confirm password -->

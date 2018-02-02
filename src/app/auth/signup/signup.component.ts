@@ -1,7 +1,8 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { matchOtherValidator } from './match-other-validator';
+import { PasswordValidatorOptions, passwordValidator, passwordValidatorLength } from './password.validator';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -27,12 +28,21 @@ export class SignupComponent implements OnInit, DoCheck {
   userPassword: string;
   confirmPassword: string;
 
-  emailPattern   = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+  passwordRequirements: PasswordValidatorOptions = {
+    requireLetters: true,
+    requireLowerCaseLetters: true,
+    requireUpperCaseLetters: true,
+    requireNumbers: true,
+    requireSpecialCharacters: true
+  };
 
   myGroup: FormGroup = new FormGroup({
     email: new FormControl('', [ Validators.required, Validators.pattern(this.emailPattern)]),
-    password: new FormControl('', [ Validators.required, Validators.minLength(6), Validators.maxLength(20) ]),
+    password: new FormControl('', [ Validators.required,
+                                    passwordValidator(this.passwordRequirements),
+                                    passwordValidatorLength(8, 20)]),
     confirmPassword: new FormControl('', [ Validators.required, , matchOtherValidator('password') ])
   });
 
@@ -50,7 +60,10 @@ export class SignupComponent implements OnInit, DoCheck {
       if (this.myGroup.get('email').hasError('pattern') ||
           this.myGroup.get('email').hasError('required') ||
           this.myGroup.get('password').hasError('required') ||
-          this.myGroup.get('confirmPassword').hasError('required')) {
+          this.myGroup.get('password').hasError('passwordValidator') ||
+          this.myGroup.get('password').hasError('passwordValidatorLength') ||
+          this.myGroup.get('confirmPassword').hasError('required') ||
+          this.myGroup.get('confirmPassword').hasError('matchOtherValidator')) {
         this.submitDisabled = true;
       } else {
         this.submitDisabled = false;
@@ -66,6 +79,7 @@ export class SignupComponent implements OnInit, DoCheck {
     console.log(this.confirmPassword);
   }
 
+
   emailRequired() {
     return this.myGroup.get('email').hasError('required');
   }
@@ -78,11 +92,19 @@ export class SignupComponent implements OnInit, DoCheck {
     return this.myGroup.get('password').hasError('required');
   }
 
+  passwordValid() {
+    return this.myGroup.get('password').hasError('passwordValidator');
+  }
+
+  passwordLengthValid() {
+    return this.myGroup.get('password').hasError('passwordValidatorLength');
+  }
+
   confirmPasswordRequired() {
     return this.myGroup.get('confirmPassword').hasError('required');
   }
 
-  confirmPasswordMatch () {
+  confirmPasswordMatch() {
     return this.myGroup.get('confirmPassword').hasError('matchOtherValidator');
   }
 }
