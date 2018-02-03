@@ -38,13 +38,21 @@
       </mat-form-field>
 
       <div class="submit-block" >
-        <button
+          <button
             mat-raised-button
             [disabled]="submitDisabled"
             color="primary"
             (click)="onSignIn()" >
             Submit</button>
+        <div class="float-right" *ngIf="showSignInFailed">
+          <h5>Wrong Email or Password!</h5>
+        </div>
       </div>
+
+
+
+
+
 
     </mat-card-content>
   </mat-card>

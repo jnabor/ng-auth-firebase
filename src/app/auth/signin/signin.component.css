@@ -5,6 +5,10 @@
   padding-top: 30px;
 }
 
+.error-msg {
+  float: right;
+}
+
 .example-card {
   margin: auto;
   max-width: 350px;
@@ -33,4 +37,7 @@
   padding-top: 20px;
 }
 
-
+.float-right {
+  float: right;
+  color: red;
+}

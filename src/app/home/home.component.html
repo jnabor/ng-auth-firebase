@@ -6,9 +6,17 @@
       <div class="subtitle">
         Angular using Material Design and Firebase Backend
       </div>
-      <div class="actions" >
-        <a mat-raised-button color="primary" class="action-item" routerLink="/signin">Sign In</a>
-        <a mat-raised-button color="accent" class="action-item" routerLink="/signup">Sign Up</a>
-      </div>      
+      <ng-template [ngIf]="authService.isAuthenticated()" >
+        <div class="signedin">You have signed in!</div>
+        <div class="actions" >
+          <button mat-raised-button color="primary" (click)="signOut()" >Sign Out</button>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="!authService.isAuthenticated()" >
+        <div class="actions" >
+          <a mat-raised-button color="primary" class="action-item" routerLink="/signin">Sign In</a>
+          <a mat-raised-button color="accent" class="action-item" routerLink="/signup">Sign Up</a>
+        </div>
+      </ng-template>
     </section>
 </div>

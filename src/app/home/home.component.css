@@ -31,3 +31,12 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.signedin{
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  margin: 10px 0 20px 0;
+  text-align: center;
+}

@@ -50,7 +50,6 @@ export class SignupComponent implements OnInit, DoCheck {
 
   constructor(private authService: AuthService) {
 
-
   }
 
   ngOnInit() {

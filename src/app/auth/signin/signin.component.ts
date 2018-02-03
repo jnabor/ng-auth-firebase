@@ -1,7 +1,8 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import { FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { ErrorStateMatcher} from '@angular/material/core';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -32,8 +33,11 @@ export class SigninComponent implements OnInit, DoCheck {
 
   userEmail: string;
   userPassword: string;
+  intervalQuery: any;
+  intervalTimeout: any;
+  showSignInFailed = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -48,11 +52,55 @@ export class SigninComponent implements OnInit, DoCheck {
         this.submitDisabled = false;
       }
     }
+
   }
 
   onSignIn() {
     this.toggleProgress = true;
     this.submitted = true;
     this.authService.signinUser(this.userEmail, this.userPassword);
+    this.intervalQuery = setInterval(() => {
+      this.checkAuthenticationStatus();
+      }, 50);
+    this.intervalTimeout = setInterval(() => {
+        this.checkTimeoutStatus();
+        }, 5000);
+  }
+
+  checkAuthenticationStatus () {
+    if (this.authService.signInStatus() === 'signedin') {
+      console.log('signed in');
+      this.toggleProgress = false;
+      this.clearIntervals();
+      this.router.navigate(['/home']);
+
+    } else if (this.authService.signInStatus() === 'invalidsignin') {
+      this.showSignInFailed = true;
+      console.log('invalid email or password');
+      this.toggleProgress = false;
+      this.clearIntervals();
+      this.showSignInFailed = true;
+      setTimeout(() => {
+        this.showSignInFailed = false;
+      }, 5000);
+
+    } else {
+      console.log('waiting');
+    }
+  }
+
+  clearIntervals () {
+    if (this.intervalQuery) {
+      clearInterval(this.intervalQuery);
+    }
+    if (this.intervalTimeout) {
+      clearInterval(this.intervalTimeout);
+    }
+  }
+
+  checkTimeoutStatus () {
+    this.clearIntervals();
+    console.log('sign in timeout');
+
   }
 }

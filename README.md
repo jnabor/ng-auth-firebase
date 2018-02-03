@@ -7,22 +7,26 @@ Access live demo @ https://angular-authentication-demo.firebaseapp.com/
    Home Page
 
    Registration
-   - Email pattern validation
-   - Password pattern validation
-   - Password confirm matching
-   - Submit with progress spinner
-   - Tooltips for passwrd hint message
-   - Database update
-   - Registratin Finished: link to sign in
+   - UI|Validation: Email pattern
+   - UI|Validation: Password pattern
+   - UI|Validation: Password confirm matching
+   - UI: Submit with progress spinner
+   - UI: Tooltips for password hint
+   - Database query and update
+   - (todo) Failure: user already signed up
+   - (todo) Success: show link to sign in
    - (todo) Email verification
    - (todo) Registration with Google
    - (todo) Registration with Facebook
 
    Sign In
-   - Email pattern validation
-   - Password pattern validation
-   - Submit with progress spinner
-   - authentication with token update
+   - UI|Validation: Email pattern
+   - UI: Submit with progress spinner
+   - Database query and update
+   - Success: authentication with token update
+   - Success: Logout available
+   - Failure: Timed wrong email or password message
+   - Failure: Timeout for sigin in time
    - (todo) SMS login
    - (todo) Sign In with Google
    - (todo) Sign with Facebook
