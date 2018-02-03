@@ -23,4 +23,9 @@ export class ToolbarComponent implements OnInit {
   getUrl() {
     return this.router.url;
   }
+
+  logOut () {
+    this.authService.logout();
+  }
+
 }

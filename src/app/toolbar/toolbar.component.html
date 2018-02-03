@@ -8,8 +8,8 @@
     <a mat-button routerLink="/signin">Sign In</a>
     <a mat-button routerLink="/signup">Register</a>
   </ng-template>
-  <ng-template [ngIf]="isAuthenticated()">
-
+  <ng-template [ngIf]="isAuthenticated() && getUrl() != '/home'">
+    <button (click)="logOut" >Signout</button>
   </ng-template>
 
 </mat-toolbar>

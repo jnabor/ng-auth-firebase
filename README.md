@@ -13,11 +13,11 @@ Access live demo @ https://angular-authentication-demo.firebaseapp.com/
    - UI: Submit with progress spinner
    - UI: Tooltips for password hint
    - Database query and update
-   - (todo) Failure: user already signed up
-   - (todo) Success: show link to sign in
+   - Failure: emaill already in use
+   - Failure: Timeout for server response
+   - Success: show message
    - (todo) Email verification
    - (todo) Registration with Google
-   - (todo) Registration with Facebook
 
    Sign In
    - UI|Validation: Email pattern
@@ -26,10 +26,10 @@ Access live demo @ https://angular-authentication-demo.firebaseapp.com/
    - Success: authentication with token update
    - Success: Logout available
    - Failure: Timed wrong email or password message
-   - Failure: Timeout for sigin in time
+   - Failure: Timeout for server response 
    - (todo) SMS login
    - (todo) Sign In with Google
-   - (todo) Sign with Facebook
-
+cd
    Logout
    - invalidate tokens
+   - redirect to home

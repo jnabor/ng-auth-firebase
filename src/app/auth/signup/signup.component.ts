@@ -4,6 +4,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { matchOtherValidator } from './match-other-validator';
 import { PasswordValidatorOptions, passwordFormatValidator } from './password.validator';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -29,6 +30,11 @@ export class SignupComponent implements OnInit, DoCheck {
   userEmail: string;
   userPassword: string;
   confirmPassword: string;
+  showSignUpFailed = false;
+  showSignUpSuccess = false;
+  intervalQuery: any;
+  intervalTimeout: any;
+  signUpMessage = 'xcvxcvxcvxcvxcvxcv';
 
   emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -48,7 +54,7 @@ export class SignupComponent implements OnInit, DoCheck {
   matcherPassword = new MyErrorStateMatcher();
   matcherPasswordConfirm = new MyErrorStateMatcher();
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
 
   }
 
@@ -83,8 +89,60 @@ export class SignupComponent implements OnInit, DoCheck {
     this.toggleProgress = true;
     this.submitted = true;
     this.authService.signupUser(this.userEmail, this.userPassword);
+    this.intervalQuery = setInterval(() => {
+      this.checkRegistrationStatus();
+      }, 80);
+    this.intervalTimeout = setInterval(() => {
+        this.checkTimeoutStatus();
+        }, 5000);
   }
 
+  checkRegistrationStatus() {
+    const message = this.authService.signUpStatus();
+
+    if (message === 'registered') {
+      console.log('signed up');
+      this.toggleProgress = false;
+      this.clearIntervals();
+      this.showSignUpSuccess = true;
+
+    } else if (message === '') {
+      console.log('waiting');
+
+    } else {
+
+      this.showSignUpFailed = true;
+      this.signUpMessage = message;
+      console.log('Registration failed!');
+      this.toggleProgress = false;
+      this.clearIntervals();
+      this.showSignUpFailed = true;
+      setTimeout(() => {
+        this.showSignUpFailed = false;
+      }, 5000);
+    }
+  }
+
+  checkTimeoutStatus() {
+    console.log('sign up timeout');
+    this.showSignUpFailed = true;
+    console.log('Registration failed!');
+    this.toggleProgress = false;
+    this.clearIntervals();
+    this.showSignUpFailed = true;
+    setTimeout(() => {
+      this.showSignUpFailed = false;
+    }, 1000);
+  }
+
+  clearIntervals () {
+    if (this.intervalQuery) {
+      clearInterval(this.intervalQuery);
+    }
+    if (this.intervalTimeout) {
+      clearInterval(this.intervalTimeout);
+    }
+  }
 
   emailRequired() {
     return this.signinForm.get('email').hasError('required');

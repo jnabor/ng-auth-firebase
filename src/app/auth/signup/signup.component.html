@@ -1,10 +1,12 @@
-<div class="signup-block">
+<div class="signup-block" *ngIf="!showSignUpSuccess">
   <mat-card class="example-card" [class.mat-elevation-z2]="true" *ngIf="!toggleProgress">
     <mat-card-content>
       <div class="card-header-block" >
-        <h4>Sign Up</h4>
+        Sign Up
       </div>
-
+      <div class="sign-up-fail" >
+        <div *ngIf="showSignUpFailed" >{{ signUpMessage }}</div>
+      </div>
       <div [formGroup]="signinForm" #formDir="ngForm">
 
       <!-- email -->
@@ -85,4 +87,15 @@
   </div>
 </div>
 
-
+<div class="signup-block" *ngIf="showSignUpSuccess">
+  <mat-card class="example-card" [class.mat-elevation-z2]="true" *ngIf="!toggleProgress">
+    <mat-card-content>
+      <div class="card-header-block" >
+        Registration Success!
+      </div>
+      <div class="success-msg">
+        Email verification link sent to {{ userEmail }}.
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

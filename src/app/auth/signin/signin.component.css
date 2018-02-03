@@ -1,7 +1,7 @@
 
 .signin-block {
   margin: auto;
-  width: 50%;
+  width: 80%;
   padding-top: 30px;
 }
 
@@ -12,12 +12,12 @@
 .example-card {
   margin: auto;
   max-width: 350px;
-  min-width: 150px;
+  min-width: 180px;
 }
 
 .example-full-width {
   display: block;
-  margin: 10px 12px 10px 12px;
+  margin: 0px 12px 10px 12px;
 }
 
 .submit-block {
@@ -27,7 +27,12 @@
 
 .card-header-block {
   display: block;
-  margin: 5px 12px 5px 12px;
+  height: 25px;
+  margin-left: 12px;
+  margin-right: 12px;
+  padding-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .progress-block {
@@ -37,7 +42,10 @@
   padding-top: 20px;
 }
 
-.float-right {
-  float: right;
+.sign-in-fail {
   color: red;
+  height: 35px;
+  margin: 0px 12px 0px 12px;
+  padding: 0px;
+  font-size: 75%;
 }

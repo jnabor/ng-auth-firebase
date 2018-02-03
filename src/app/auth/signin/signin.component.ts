@@ -61,10 +61,10 @@ export class SigninComponent implements OnInit, DoCheck {
     this.authService.signinUser(this.userEmail, this.userPassword);
     this.intervalQuery = setInterval(() => {
       this.checkAuthenticationStatus();
-      }, 50);
+      }, 80);
     this.intervalTimeout = setInterval(() => {
         this.checkTimeoutStatus();
-        }, 5000);
+        }, 1000);
   }
 
   checkAuthenticationStatus () {
@@ -75,14 +75,8 @@ export class SigninComponent implements OnInit, DoCheck {
       this.router.navigate(['/home']);
 
     } else if (this.authService.signInStatus() === 'invalidsignin') {
-      this.showSignInFailed = true;
       console.log('invalid email or password');
-      this.toggleProgress = false;
-      this.clearIntervals();
-      this.showSignInFailed = true;
-      setTimeout(() => {
-        this.showSignInFailed = false;
-      }, 5000);
+      this.failHandler();
 
     } else {
       console.log('waiting');
@@ -99,8 +93,19 @@ export class SigninComponent implements OnInit, DoCheck {
   }
 
   checkTimeoutStatus () {
-    this.clearIntervals();
     console.log('sign in timeout');
+    this.failHandler();
 
+  }
+
+  failHandler() {
+    this.showSignInFailed = true;
+    console.log('invalid email or password');
+    this.toggleProgress = false;
+    this.clearIntervals();
+    this.showSignInFailed = true;
+    setTimeout(() => {
+      this.showSignInFailed = false;
+    }, 10000);
   }
 }

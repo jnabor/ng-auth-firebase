@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 export class AuthService {
   token: string;
   signIn = '';
-  registered = false;
+  registered = '';
 
   constructor(private router: Router) {
 
@@ -16,13 +16,13 @@ export class AuthService {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
         response => {
-          this.registered = true;
+          this.registered = 'registered';
+          console.log('sign up success message: ' + response);
         }
       )
       .catch(
         error => {
-          console.log(error);
-          this.registered = false;
+          this.registered = error.message;
         }
       );
   }
@@ -75,7 +75,7 @@ export class AuthService {
     return this.signIn;
   }
 
-  isRegistered(): boolean {
+  signUpStatus(): string {
     return this.registered;
   }
 
