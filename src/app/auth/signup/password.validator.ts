@@ -1,5 +1,4 @@
-import {FormControl} from '@angular/forms';
-
+import { FormControl, ValidatorFn, AbstractControl} from '@angular/forms';
 
 export interface PasswordValidatorOptions {
   minLength?: number;
@@ -11,15 +10,14 @@ export interface PasswordValidatorOptions {
   requireSpecialCharacters?: boolean;
 }
 
-export function passwordValidator (options: PasswordValidatorOptions) {
+export function passwordFormatValidator(options: PasswordValidatorOptions): ValidatorFn {
 
   const validator = new PasswordValidator(options);
 
-  return function validatePassword (control: FormControl) {
+  return (control: AbstractControl): {[key: string]: any} => {
     return validator.validate(control.value);
   };
 }
-
 
 export class PasswordValidator {
 
@@ -33,48 +31,40 @@ export class PasswordValidator {
   }
 
   validate (value: string): any {
-
     if (!value) {
       return null;
     }
 
     const errors: any = {};
 
-    // Minimum length.
     if (this.options.minLength > 0 && value.length < this.options.minLength) {
       errors.passwordMinLengthRequired = {
         minLength: this.options.minLength
       };
     }
 
-    // Maximum length.
     if (this.options.maxLength >= 0 && value.length > this.options.maxLength) {
       errors.passwordMaxLengthExceeded = {
         maxLength: this.options.maxLength
       };
     }
 
-    // Letters.
     if (this.options.requireLetters && !this.letterMatcher.test(value)) {
       errors.passwordLetterRequired = true;
     }
 
-    // Lower-case letters.
     if (this.options.requireLowerCaseLetters && !this.lowerCaseLetterMatcher.test(value)) {
       errors.passwordLowerCaseLetterRequired = true;
     }
 
-    // Upper-case letters.
     if (this.options.requireUpperCaseLetters  && !this.upperCaseLetterMatcher.test(value)) {
       errors.passwordUpperCaseLetterRequired = true;
     }
 
-    // Numbers.
     if (this.options.requireNumbers && !this.numberMatcher.test(value)) {
       errors.passwordNumberRequired = true;
     }
 
-    // Special characters.
     if (this.options.requireSpecialCharacters && !this.specialCharactersMatcher.test(value)) {
       errors.passwordSpecialCharacterRequired = true;
     }

@@ -2,7 +2,7 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { matchOtherValidator } from './match-other-validator';
-import { PasswordValidatorOptions, passwordValidator } from './password.validator';
+import { PasswordValidatorOptions, passwordFormatValidator } from './password.validator';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -22,7 +22,8 @@ export class SignupComponent implements OnInit, DoCheck {
   toggleProgress = false;
   submitDisabled  = true;
   submitted = false;
-  hide = true;
+  pwhide = true;
+  cnhide = true;
 
   userEmail: string;
   userPassword: string;
@@ -40,7 +41,7 @@ export class SignupComponent implements OnInit, DoCheck {
     requireSpecialCharacters: true
   };
 
-  myGroup: FormGroup;
+  signinForm: FormGroup;
 
   matcherEmail = new MyErrorStateMatcher();
   matcherPassword = new MyErrorStateMatcher();
@@ -49,28 +50,27 @@ export class SignupComponent implements OnInit, DoCheck {
   constructor() { }
 
   ngOnInit() {
-    this.myGroup = new FormGroup({
+    this.signinForm = new FormGroup({
       email: new FormControl('', [ Validators.required, Validators.pattern(this.emailPattern)]),
       password: new FormControl('', [ Validators.required,
-                                      passwordValidator(this.passwordRequirements)]),
-      confirmPassword: new FormControl('', [ Validators.required, , matchOtherValidator('password') ])
+                                      passwordFormatValidator(this.passwordRequirements)]),
+      confirmPassword: new FormControl('', [ Validators.required, , matchOtherValidator('password') ]),
+      submit: new FormControl({enabled: false})
     });
+  }
+
+  updateForm() {
+
   }
 
   ngDoCheck() {
     if (this.submitted === false) {
-
-      if (this.emailRequired()  ||
-          this.emailPatternInvalid() ||
-          this.passwordRequired() ||
-          this.passwordInvalid() ||
-          this.confirmPasswordRequired()  ||
-          this.confirmPasswordMismatch()) {
-        console.log('disabled');
-        this.submitDisabled = true;
-      } else {
-        console.log('enabled');
+      if ((this.signinForm.get('email').valid) &&
+          (this.signinForm.get('password').valid) &&
+          (this.signinForm.get('confirmPassword').valid)) {
         this.submitDisabled = false;
+      } else {
+        this.submitDisabled = true;
       }
     }
 
@@ -86,26 +86,26 @@ export class SignupComponent implements OnInit, DoCheck {
 
 
   emailRequired() {
-    return this.myGroup.get('email').hasError('required');
+    return this.signinForm.get('email').hasError('required');
   }
 
   emailPatternInvalid() {
-    return this.myGroup.get('email').hasError('pattern');
+    return this.signinForm.get('email').hasError('pattern');
   }
 
   passwordRequired() {
-    return this.myGroup.get('password').hasError('required');
+    return this.signinForm.get('password').hasError('required');
   }
 
   passwordInvalid() {
-    return this.myGroup.get('password').hasError('passwordValidator');
+    return !this.signinForm.get('password').hasError('passwordFormatValidator');
   }
 
   confirmPasswordRequired() {
-    return this.myGroup.get('confirmPassword').hasError('required');
+    return this.signinForm.get('confirmPassword').hasError('required');
   }
 
   confirmPasswordMismatch() {
-    return this.myGroup.get('confirmPassword').hasError('matchOtherValidator');
+    return !this.signinForm.get('confirmPassword').hasError('matchOtherValidator');
   }
 }
