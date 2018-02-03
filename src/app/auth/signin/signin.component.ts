@@ -1,6 +1,7 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import { AuthService } from '../auth.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -32,7 +33,7 @@ export class SigninComponent implements OnInit, DoCheck {
   userEmail: string;
   userPassword: string;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -52,7 +53,6 @@ export class SigninComponent implements OnInit, DoCheck {
   onSignIn() {
     this.toggleProgress = true;
     this.submitted = true;
-    console.log(this.userEmail);
-    console.log(this.userPassword);
+    this.authService.signinUser(this.userEmail, this.userPassword);
   }
 }

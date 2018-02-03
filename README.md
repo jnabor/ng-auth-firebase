@@ -1,27 +1,31 @@
-# NgAuthFirebase
+# Authentication with Angular with Material Design and Firebase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
+Access live demo @ https://angular-authentication-demo.firebaseapp.com/
 
-## Development server
+## Features
+   
+   Home Page
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+   Registration
+   - Email pattern validation
+   - Password pattern validation
+   - Password confirm matching
+   - Submit with progress spinner
+   - Tooltips for passwrd hint message
+   - Database update
+   - Registratin Finished: link to sign in
+   - (todo) Email verification
+   - (todo) Registration with Google
+   - (todo) Registration with Facebook
 
-## Code scaffolding
+   Sign In
+   - Email pattern validation
+   - Password pattern validation
+   - Submit with progress spinner
+   - authentication with token update
+   - (todo) SMS login
+   - (todo) Sign In with Google
+   - (todo) Sign with Facebook
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+   Logout
+   - invalidate tokens

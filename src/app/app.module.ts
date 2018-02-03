@@ -65,7 +65,7 @@ import { AuthService } from './auth/auth.service';
     MatProgressSpinnerModule,
     AppRoutingModule
   ],
-  providers: [AuthService],
-  bootstrap: [AppComponent]
+  providers: [ AuthService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

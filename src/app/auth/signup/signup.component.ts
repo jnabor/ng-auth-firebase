@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '
 import { ErrorStateMatcher } from '@angular/material/core';
 import { matchOtherValidator } from './match-other-validator';
 import { PasswordValidatorOptions, passwordFormatValidator } from './password.validator';
+import { AuthService } from '../auth.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -47,7 +48,10 @@ export class SignupComponent implements OnInit, DoCheck {
   matcherPassword = new MyErrorStateMatcher();
   matcherPasswordConfirm = new MyErrorStateMatcher();
 
-  constructor() { }
+  constructor(private authService: AuthService) {
+
+
+  }
 
   ngOnInit() {
     this.signinForm = new FormGroup({
@@ -79,9 +83,7 @@ export class SignupComponent implements OnInit, DoCheck {
   onSignUp() {
     this.toggleProgress = true;
     this.submitted = true;
-    console.log(this.userEmail);
-    console.log(this.userPassword);
-    console.log(this.confirmPassword);
+    this.authService.signupUser(this.userEmail, this.userPassword);
   }
 
 
