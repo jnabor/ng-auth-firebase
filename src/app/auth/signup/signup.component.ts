@@ -2,7 +2,7 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { matchOtherValidator } from './match-other-validator';
-import { PasswordValidatorOptions, passwordValidator, passwordValidatorLength } from './password.validator';
+import { PasswordValidatorOptions, passwordValidator } from './password.validator';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -31,6 +31,8 @@ export class SignupComponent implements OnInit, DoCheck {
   emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   passwordRequirements: PasswordValidatorOptions = {
+    minLength: 8,
+    maxLength: 20,
     requireLetters: true,
     requireLowerCaseLetters: true,
     requireUpperCaseLetters: true,
@@ -38,13 +40,7 @@ export class SignupComponent implements OnInit, DoCheck {
     requireSpecialCharacters: true
   };
 
-  myGroup: FormGroup = new FormGroup({
-    email: new FormControl('', [ Validators.required, Validators.pattern(this.emailPattern)]),
-    password: new FormControl('', [ Validators.required,
-                                    passwordValidator(this.passwordRequirements),
-                                    passwordValidatorLength(8, 20)]),
-    confirmPassword: new FormControl('', [ Validators.required, , matchOtherValidator('password') ])
-  });
+  myGroup: FormGroup;
 
   matcherEmail = new MyErrorStateMatcher();
   matcherPassword = new MyErrorStateMatcher();
@@ -53,22 +49,31 @@ export class SignupComponent implements OnInit, DoCheck {
   constructor() { }
 
   ngOnInit() {
+    this.myGroup = new FormGroup({
+      email: new FormControl('', [ Validators.required, Validators.pattern(this.emailPattern)]),
+      password: new FormControl('', [ Validators.required,
+                                      passwordValidator(this.passwordRequirements)]),
+      confirmPassword: new FormControl('', [ Validators.required, , matchOtherValidator('password') ])
+    });
   }
 
   ngDoCheck() {
     if (this.submitted === false) {
-      if (this.myGroup.get('email').hasError('pattern') ||
-          this.myGroup.get('email').hasError('required') ||
-          this.myGroup.get('password').hasError('required') ||
-          this.myGroup.get('password').hasError('passwordValidator') ||
-          this.myGroup.get('password').hasError('passwordValidatorLength') ||
-          this.myGroup.get('confirmPassword').hasError('required') ||
-          this.myGroup.get('confirmPassword').hasError('matchOtherValidator')) {
+
+      if (this.emailRequired()  ||
+          this.emailPatternInvalid() ||
+          this.passwordRequired() ||
+          this.passwordInvalid() ||
+          this.confirmPasswordRequired()  ||
+          this.confirmPasswordMismatch()) {
+        console.log('disabled');
         this.submitDisabled = true;
       } else {
+        console.log('enabled');
         this.submitDisabled = false;
       }
     }
+
   }
 
   onSignUp() {
@@ -84,7 +89,7 @@ export class SignupComponent implements OnInit, DoCheck {
     return this.myGroup.get('email').hasError('required');
   }
 
-  emailPatternValid() {
+  emailPatternInvalid() {
     return this.myGroup.get('email').hasError('pattern');
   }
 
@@ -92,19 +97,15 @@ export class SignupComponent implements OnInit, DoCheck {
     return this.myGroup.get('password').hasError('required');
   }
 
-  passwordValid() {
+  passwordInvalid() {
     return this.myGroup.get('password').hasError('passwordValidator');
-  }
-
-  passwordLengthValid() {
-    return this.myGroup.get('password').hasError('passwordValidatorLength');
   }
 
   confirmPasswordRequired() {
     return this.myGroup.get('confirmPassword').hasError('required');
   }
 
-  confirmPasswordMatch() {
+  confirmPasswordMismatch() {
     return this.myGroup.get('confirmPassword').hasError('matchOtherValidator');
   }
 }

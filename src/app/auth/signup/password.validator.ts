@@ -2,13 +2,14 @@ import {FormControl} from '@angular/forms';
 
 
 export interface PasswordValidatorOptions {
+  minLength?: number;
+  maxLength?: number;
   requireLetters?: boolean;
   requireLowerCaseLetters?: boolean;
   requireUpperCaseLetters?: boolean;
   requireNumbers?: boolean;
   requireSpecialCharacters?: boolean;
 }
-
 
 export function passwordValidator (options: PasswordValidatorOptions) {
 
@@ -19,18 +20,16 @@ export function passwordValidator (options: PasswordValidatorOptions) {
   };
 }
 
-export function passwordValidatorLength (min: number, max: number) {
 
-  const validator = new PasswordValidatorLength(min, max);
+export class PasswordValidator {
 
-  return function validatePassword (control: FormControl) {
-    return validator.validate(control.value);
-  };
-}
+  private letterMatcher = /[a-zA-Z]/;
+  private lowerCaseLetterMatcher = /[a-z]/;
+  private upperCaseLetterMatcher = /[A-Z]/;
+  private numberMatcher = /[0-9]/;
+  private specialCharactersMatcher = /[-+=_.,:;~`!@#$%^&*(){}<>\[\]"'\/\\]/;
 
-export class PasswordValidatorLength {
-
-  constructor (private min: number, private max: number) {
+  constructor (private options: PasswordValidatorOptions) {
   }
 
   validate (value: string): any {
@@ -42,42 +41,18 @@ export class PasswordValidatorLength {
     const errors: any = {};
 
     // Minimum length.
-    if (this.min > 0 && value.length < this.min) {
+    if (this.options.minLength > 0 && value.length < this.options.minLength) {
       errors.passwordMinLengthRequired = {
-        minLength: this.min
+        minLength: this.options.minLength
       };
     }
 
     // Maximum length.
-    if (this.max >= 0 && value.length > this.max) {
+    if (this.options.maxLength >= 0 && value.length > this.options.maxLength) {
       errors.passwordMaxLengthExceeded = {
-        maxLength: this.max
+        maxLength: this.options.maxLength
       };
     }
-    return Object.keys(errors).length > 0 ? errors : null;
-  }
-}
-
-export class PasswordValidator {
-
-  private letterMatcher = /[a-zA-Z]/;
-  private lowerCaseLetterMatcher = /[a-z]/;
-  private upperCaseLetterMatcher = /[A-Z]/;
-  private numberMatcher = /[0-9]/;
-  private specialCharactersMatcher = /[-+=_.,:;~`!@#$%^&*(){}<>\[\]"'\/\\]/;
-
-
-  constructor (private options: PasswordValidatorOptions) {
-  }
-
-
-  validate (value: string): any {
-
-    if (!value) {
-      return null;
-    }
-
-    const errors: any = {};
 
     // Letters.
     if (this.options.requireLetters && !this.letterMatcher.test(value)) {
@@ -105,7 +80,5 @@ export class PasswordValidator {
     }
 
     return Object.keys(errors).length > 0 ? errors : null;
-
   }
-
 }

@@ -15,7 +15,7 @@
           [errorStateMatcher]="matcherEmail"
           [(ngModel)]="userEmail"
           required>
-        <mat-error *ngIf="emailPatternValid()  && !emailRequired()">
+        <mat-error *ngIf="emailPatternInvalid()  && !emailRequired()">
           Not a valid email address
         </mat-error>
         <mat-error *ngIf="emailRequired()">
@@ -37,16 +37,15 @@
         <mat-error *ngIf="passwordRequired()">
           Password is <strong>required</strong>
         </mat-error>
-        <mat-error *ngIf="!passwordLengthValid() && !passwordRequired()">
-          Password must be 8-20 characters
-        </mat-error>
-        <mat-error *ngIf="!passwordValid() && !passwordRequired() &&passwordLengthValid()">
-          number, lowercase, upper case, special characters required
+        <mat-error
+            *ngIf="passwordInvalid() && !passwordRequired()"
+            matTooltip="alphanumeric and special characters, 8-20 characters long, at least 1 upper and 1 lower case">
+          Password is <strong>invalid</strong>
         </mat-error>
       </mat-form-field>
 
       <!-- confirm password -->
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="example-full-width" >
         <input
             matInput
             formControlName="confirmPassword"
@@ -59,7 +58,7 @@
         <mat-error *ngIf="confirmPasswordRequired()">
           Please confirm password
         </mat-error>
-        <mat-error *ngIf="!confirmPasswordMatch() && !confirmPasswordRequired()">
+        <mat-error *ngIf="confirmPasswordMismatch() && !confirmPasswordRequired()">
           Password mismatch
         </mat-error>
       </mat-form-field>
