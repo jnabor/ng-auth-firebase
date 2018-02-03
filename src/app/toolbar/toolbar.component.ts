@@ -20,4 +20,7 @@ export class ToolbarComponent implements OnInit {
     return false;
   }
 
+  getUrl() {
+    return this.router.url;
+  }
 }

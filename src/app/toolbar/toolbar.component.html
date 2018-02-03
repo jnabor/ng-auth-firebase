@@ -4,7 +4,7 @@
     Auth Demo
   </a>
   <span class="tb-spacer"></span>
-  <ng-template [ngIf]="!isAuthenticated() && router.url != '/home'">
+  <ng-template [ngIf]="!isAuthenticated() && getUrl() != '/home'">
     <a mat-button routerLink="/signin">Sign In</a>
     <a mat-button routerLink="/signup">Register</a>
   </ng-template>
